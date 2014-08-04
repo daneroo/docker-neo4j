@@ -9,6 +9,30 @@ With the Dockerfile on repository you've a docker neo4j community edition image 
 
 1. Execute this command:
 
-	`docker run -i -t -d -privileged -p 7474:7474 tpires/neo4j`
+	`docker run -i -t -d --privileged -p 7474:7474 daneroo/neo4j`
 
 2. Access to http://localhost:7474 with your browser.
+
+### Local setup
+My setup using `boot2docker` on OSX.
+
+    export DOCKER_HOST=tcp://192.168.59.103:2375
+    docker build -t daneroo/neo4j .
+    docker run -t -d --privileged -p 7474:7474 daneroo/neo4j
+
+If you wanted https
+
+    docker run -t -d --privileged -p 7474:7474 -p 7473:7473 daneroo/neo4j
+
+
+
+### Notes
+This was forked from [tpires/neo4j](https://github.com/tpires/neo4j)
+We removed the local IP binding in launch.sh in favor of binding to all ports (0.0.0.0), and hence move the config command back to Dockerfile.
+
+If we wanted access to the neo4j-shell, it is included in: 
+
+    apt-get install neo4j-advanced
+
+### TODO
+* Make the data-dir mountable

@@ -1,7 +1,7 @@
 ## Neo4J dependency: dockerfile/java
 ## get java from trusted build
 from dockerfile/java
-maintainer Tiago Pires, tiago-a-pires@ptinovacao.pt
+maintainer Daniel Lauzon, daniel.lauzon@gmail.com
 
 ## install neo4j according to http://www.neo4j.org/download/linux
 # Import neo4j signing key
@@ -11,10 +11,6 @@ run echo 'deb http://debian.neo4j.org/repo stable/' > /etc/apt/sources.list.d/ne
 # Find out about the files in neo4j repo ; install neo4j community edition
 run apt-get update ; apt-get install neo4j -y
 
-## add launcher and set execute property
-add launch.sh /
-run chmod +x /launch.sh
-
 ## clean sources
 run apt-get clean
 
@@ -22,6 +18,11 @@ run apt-get clean
 ## enable neo4j indexing, and set indexable keys to name,age
 run sed -i "s|#node_auto_indexing|node_auto_indexing|g" /var/lib/neo4j/conf/neo4j.properties
 run sed -i "s|#node_keys_indexable|node_keys_indexable|g" /var/lib/neo4j/conf/neo4j.properties
+run sed -i "s|#org.neo4j.server.webserver.address=0.0.0.0|org.neo4j.server.webserver.address=0.0.0.0|g" /var/lib/neo4j/conf/neo4j-server.properties
+
+## add launcher and set execute property
+add launch.sh /
+run chmod +x /launch.sh
 
 workdir /
 
